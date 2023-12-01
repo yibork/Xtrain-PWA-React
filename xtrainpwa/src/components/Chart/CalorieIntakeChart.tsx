@@ -1,6 +1,8 @@
 // CalorieIntakeChart.tsx
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
+import { getCalorieIntakeData } from '../../services/User'; // Adjust the path as necessary
+import { useState, useEffect } from 'react';
 import Chart from 'chart.js/auto'; // Ensure you import Chart from 'chart.js/auto' to register controllers, elements, scales, and plugins.
 import {
   Chart as ChartJS,
@@ -24,13 +26,33 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+
+
 const CalorieIntakeChart: React.FC = () => {
+  const token = localStorage.getItem('authToken') || '';
+  const [calorieEntries, setCalorieEntries] = useState<{ date: string; calories: number }[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Assuming getCalorieIntakeData returns an array of objects with date and calories
+        const fetchedData = await getCalorieIntakeData(token);
+        setCalorieEntries(fetchedData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [token]);
+
+  // Map the fetched data to the chart's format
   const data = {
-    labels: Array.from(new Array(30), (_, i) => `Day ${i + 1}`), // Days of the month as labels
+    labels: calorieEntries.map(entry => entry.date), // Use the fetched dates
     datasets: [
       {
         label: 'Calorie Intake',
-        data: new Array(30).fill(null).map(() => Math.random() * 500 + 1500), // Replace with actual calorie data
+        data: calorieEntries.map(entry => entry.calories), // Use the fetched calorie values
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
         borderColor: 'rgba(255, 99, 132, 1)',
         borderWidth: 1,

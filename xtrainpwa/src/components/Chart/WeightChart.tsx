@@ -1,17 +1,16 @@
-// WeightChart.tsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { getDayWeights } from '../../services/User';
 import { Line } from 'react-chartjs-2';
-import Chart from 'chart.js/auto'; // Ensure you import Chart from 'chart.js/auto' to register controllers, elements, scales, and plugins.
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
-  BarElement,
   Title,
   Tooltip,
   Legend,
+    BarController
 } from 'chart.js';
 
 ChartJS.register(
@@ -19,18 +18,35 @@ ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
-  BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,BarController
 );
+
 const WeightChart: React.FC = () => {
-  const data = {
-    labels: Array.from(new Array(30), (_, i) => `Day ${i + 1}`), // Days of the month as labels
+  const [weightEntries, setWeightEntries] = useState<{ date: string; weight: number }[]>([]);
+  const token = localStorage.getItem('authToken') || '';
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchedData = await getDayWeights(token);
+        setWeightEntries(fetchedData); // Assuming fetchedData is an array of objects
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [token]);
+
+  // Map the weightEntries to the data expected by the chart
+  const chartData = {
+    labels: weightEntries.map(entry => entry.date), // Use the dates as labels
     datasets: [
       {
         label: 'Weight (kg)',
-        data: new Array(30).fill(null).map(() => Math.random() * 5 + 70), // Replace with actual weight data
+        data: weightEntries.map(entry => entry.weight), // Use the weights as data points
         borderColor: 'rgb(75, 192, 192)',
         tension: 0.1,
       },
@@ -40,7 +56,7 @@ const WeightChart: React.FC = () => {
   const options = {
     scales: {
       y: {
-        beginAtZero: false,
+        beginAtZero: false, // You may want to adjust this if you don't want the scale to start at zero
       },
     },
     maintainAspectRatio: false,
@@ -48,7 +64,7 @@ const WeightChart: React.FC = () => {
 
   return (
     <div className="h-64">
-      <Line data={data} options={options} />
+      <Line data={chartData} options={options} />
     </div>
   );
 };

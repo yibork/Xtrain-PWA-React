@@ -63,7 +63,7 @@ const EditProfile: React.FC<EditProfileProps> = ({ userData, onUpdate, onCancel 
             id="profilePicture"
             type="text"
             name="profilePicture"
-            value={formData.profilePicture}
+            value={formData.picture || ''}
             onChange={handleChange}
         />
         </div>
