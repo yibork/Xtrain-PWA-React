@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { UserProfile } from '../../types/user';
 import { FaRunning, FaDumbbell, FaHeartbeat, FaUserEdit } from 'react-icons/fa';
 import CalorieIntakeChart from "../Chart/CalorieIntakeChart";
@@ -10,17 +10,65 @@ interface ProfileDetailsProps {
   userData: UserProfile;
   onEdit: () => void;
 }
+interface ObjectiveConsumption {
+  name: string;
+  consumed: number;
+  total: number;
+  ratio: number;
+}
 
 const ProfileDetails: React.FC<ProfileDetailsProps> = ({ userData, onEdit }) => {
   const latestMacro = userData.day_macros?.[0] ?? {};
   const latestWeight = userData.day_weights?.[0] ?? {};
-  const navigate = useNavigate(); // Initialize useNavigate
-
+  const navigate = useNavigate();
  const handleLogout = () => {
     // Clear the authentication token and navigate to the logout or home page
     localStorage.removeItem('authToken');
     navigate('/'); // Use navigate instead of history.push
   };
+  const [consumptions, setConsumptions] = useState<ObjectiveConsumption[]>([]);
+
+  useEffect(() => {
+    const fetchConsumptions = () => {
+      const storedConsumptionsStr = localStorage.getItem('consumptions');
+      if (storedConsumptionsStr) {
+        try {
+          const storedConsumptions = JSON.parse(storedConsumptionsStr);
+          if (Array.isArray(storedConsumptions)) {
+            setConsumptions(storedConsumptions);
+          } else {
+            console.error('Stored consumptions are not in the expected array format');
+          }
+        } catch (error) {
+          console.error('Error parsing stored consumptions:', error);
+        }
+      } else {
+        console.log('No stored consumptions found');
+      }
+    };
+
+    fetchConsumptions();
+  }, []);
+
+  const [weight, setWeight] = useState('');
+
+  useEffect(() => {
+    const userObjectivesStr = localStorage.getItem('userObjectives');
+
+    if (userObjectivesStr) {
+      try {
+        const userObjectives = JSON.parse(userObjectivesStr);
+        if (userObjectives && userObjectives.weight) {
+          setWeight(userObjectives.weight);
+        } else {
+          console.error('Weight not found in user objectives');
+        }
+      } catch (error) {
+        console.error('Error parsing user objectives:', error);
+      }
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center pt-8">
       <div className="bg-white rounded-lg shadow-lg overflow-hidden max-w-xs w-full mb-5">
@@ -54,26 +102,17 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ userData, onEdit }) => 
             <span className="font-semibold">{userData.phone_number}</span>
           </div>
           {/* Display latest macro details */}
-          <div className="flex justify-between mt-3">
-            <span>Protein</span>
-            <span className="font-semibold">{latestMacro.protein}g</span>
-          </div>
-          <div className="flex justify-between mt-3">
-            <span>Fats</span>
-            <span className="font-semibold">{latestMacro.fat}g</span>
-          </div>
-          <div className="flex justify-between mt-3">
-            <span>Carbs</span>
-            <span className="font-semibold">{latestMacro.carbs}g</span>
-          </div>
-          <div className="flex justify-between mt-3">
-            <span>Calories</span>
-            <span className="font-semibold">{latestMacro.calories}</span>
-          </div>
+                {consumptions.map((macro, index) => (
+        <div key={index} className="flex justify-between mt-3">
+          <span>{macro.name}</span>
+          <span className="font-semibold">{macro.total}{macro.name !== 'Calories' ? ' g' : ' kcal'}</span>
+        </div>
+      ))}
+
           {/* Display latest weight details */}
           <div className="flex justify-between mt-3">
             <span>Weight</span>
-            <span className="font-semibold">{latestWeight.weight}</span>
+            <span className="font-semibold">{weight}</span>
           </div>
           <button onClick={onEdit} className="mt-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300 w-full flex items-center justify-center">
             <FaUserEdit />
