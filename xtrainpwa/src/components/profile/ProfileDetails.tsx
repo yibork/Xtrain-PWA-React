@@ -23,7 +23,11 @@ const ProfileDetails: React.FC<ProfileDetailsProps> = ({ userData, onEdit }) => 
   const navigate = useNavigate();
  const handleLogout = () => {
     // Clear the authentication token and navigate to the logout or home page
+
     localStorage.removeItem('authToken');
+    localStorage.removeItem('userObjectives');
+    localStorage.removeItem('consumptions');
+
     navigate('/'); // Use navigate instead of history.push
   };
   const [consumptions, setConsumptions] = useState<ObjectiveConsumption[]>([]);

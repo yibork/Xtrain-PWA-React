@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ProfileDetails from '../components/profile/ProfileDetails';
 import EditProfile from '../components/profile/EditProfile';
 import Footer from "../components/Navigation/Footer";
-import { getUserInfo } from '../services/User'; // Path to your userService
+import { getUserInfo } from '../services/User';
 import { UserProfile } from '../types/user';
 
 const ProfilePage = () => {
@@ -17,8 +17,8 @@ const ProfilePage = () => {
           const data = await getUserInfo(token);
           data.picture = process.env.REACT_APP_API_BASE_URL + data.picture;
           setUserData(data);
+          localStorage.setItem('UserDetails', JSON.stringify(data));
         } else {
-          // Handle the case where there is no token
         }
       } catch (error) {
         console.error('There was a problem fetching user data:', error);

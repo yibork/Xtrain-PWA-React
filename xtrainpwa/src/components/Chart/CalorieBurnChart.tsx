@@ -44,7 +44,6 @@ const CalorieBurnChart: React.FC = () => {
   };
 
   return (
-    // Enclose the Bar chart in a div that controls its size
     <div className="h-64">
       <Bar data={data} options={options} />
     </div>

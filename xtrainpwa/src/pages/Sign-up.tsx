@@ -98,15 +98,15 @@ export default function SignUp() {
             <div className="">
               <label
                 className="block mb-1.5 text-sm text-gray-900 font-semibold"
-                htmlFor="username" // Corrected to "username"
+                htmlFor="username"
               >
                 Username
               </label>
               <input
                 className="w-full py-3 px-4 text-sm text-gray-900 placeholder-gray-400 border border-gray-200 rounded-lg outline-none focus:border-blue-500"
                 type="text"
-                name="username" // Corrected to "username"
-                id="username" // Corrected to "username"
+                name="username"
+                id="username"
                 placeholder="Enter your unique username"
                 value={formData.username}
                 onChange={handleChange}
@@ -116,15 +116,15 @@ export default function SignUp() {
             <div className="">
               <label
                 className="block mb-1.5 text-sm text-gray-900 font-semibold"
-                htmlFor="first_name" // Corrected to "first_name"
+                htmlFor="first_name"
               >
                 First Name
               </label>
               <input
                 className="w-full py-3 px-4 text-sm text-gray-900 placeholder-gray-400 border border-gray-200 rounded-lg outline-none focus:border-blue-500"
                 type="text"
-                name="first_name" // Corrected to "first_name"
-                id="first_name" // Corrected to "first_name"
+                name="first_name"
+                id="first_name"
                 placeholder="Enter your first name"
                 value={formData.first_name}
                 onChange={handleChange}
@@ -134,15 +134,15 @@ export default function SignUp() {
             <div className="">
               <label
                 className="block mb-1.5 text-sm text-gray-900 font-semibold"
-                htmlFor="last_name" // Corrected to "last_name"
+                htmlFor="last_name"
               >
                 Last Name
               </label>
               <input
                 className="w-full py-3 px-4 text-sm text-gray-900 placeholder-gray-400 border border-gray-200 rounded-lg outline-none focus:border-blue-500"
                 type="text"
-                name="last_name" // Corrected to "last_name"
-                id="last_name" // Corrected to "last_name"
+                name="last_name"
+                id="last_name"
                 placeholder="Enter your last name"
                 value={formData.last_name}
                 onChange={handleChange}
@@ -184,15 +184,15 @@ export default function SignUp() {
             <div className="">
               <label
                 className="block mb-1.5 text-sm text-gray-900 font-semibold"
-                htmlFor="phone_number" // Corrected to "phone_number"
+                htmlFor="phone_number"
               >
                 Phone Number
               </label>
               <input
                 className="w-full py-3 px-4 text-sm text-gray-900 placeholder-gray-400 border border-gray-200 rounded-lg outline-none focus:border-blue-500"
                 type="tel"
-                name="phone_number" // Corrected to "phone_number"
-                id="phone_number" // Corrected to "phone_number"
+                name="phone_number"
+                id="phone_number"
                 placeholder="06XXXXXXXX"
                 value={formData.phone_number}
                 onChange={handleChange}

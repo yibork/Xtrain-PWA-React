@@ -1,4 +1,3 @@
-// components/WorkoutRecommendations.tsx
 import React from 'react';
 import { Workout } from '../../types/Workout';
 

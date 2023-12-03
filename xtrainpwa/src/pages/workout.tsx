@@ -9,7 +9,6 @@ import WorkoutHistory from '../components/Workout/WorkoutHistory';
 import { WorkoutSession } from '../types/Workout';
 import Footer from "../components/Navigation/Footer";
 
-// Hardcoded disciplines data
 const disciplines: Discipline[] = [
   {
     id: 1,
@@ -26,7 +25,6 @@ const disciplines: Discipline[] = [
     name: 'Yoga',
     icon: <GiLotus className="text-3xl" />,
   },
-  // ... other disciplines
 ];
 
 // Hardcoded workouts data
@@ -58,7 +56,6 @@ const allWorkouts: Workout[] = [
     caloriesPerMinute: 5,
     icon: <GiLotus className="text-3xl" />,
   },
-  // ...add other workouts as needed
 ];
 
 const WorkoutPage: React.FC = () => {
@@ -72,7 +69,6 @@ const [workoutHistory, setWorkoutHistory] = useState<WorkoutSession[]>([]);
     progress: 72
   };
      useEffect(() => {
-    // Load workout history from local storage
     const storedHistory = localStorage.getItem('workoutHistory');
     if (storedHistory) {
       setWorkoutHistory(JSON.parse(storedHistory));
@@ -84,7 +80,7 @@ useEffect(() => {
   if (storedHistory) {
     const parsedHistory = JSON.parse(storedHistory).map((session: { date: string | number | Date; }) => ({
       ...session,
-      date: new Date(session.date) // Convert the string back to a Date object
+      date: new Date(session.date)
     }));
     setWorkoutHistory(parsedHistory);
   }
@@ -104,7 +100,7 @@ useEffect(() => {
   const startWorkout = () => {
     if (selectedWorkout) {
       setActiveWorkoutSession({ workout: selectedWorkout, startTime: new Date() });
-      setSelectedWorkout(null); // Clear selected workout to allow returning to workout list
+      setSelectedWorkout(null);
     }
   };
 
@@ -121,11 +117,9 @@ const stopWorkout = () => {
       date: new Date(activeWorkoutSession.startTime.toISOString().split('T')[0]) // Store only the date part
     };
 
-    // Update the state with the new session
     const updatedWorkoutHistory = [...workoutHistory, newSession];
     setWorkoutHistory(updatedWorkoutHistory);
 
-    // Also update local storage with the new session
     localStorage.setItem('workoutHistory', JSON.stringify(updatedWorkoutHistory));
 
     setActiveWorkoutSession(null);
@@ -136,7 +130,7 @@ const stopWorkout = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen p-4">
-      <ProfileSection {...userData} />
+      <ProfileSection progress={72} />
       {!selectedDiscipline && (
         <DisciplineSelection disciplines={disciplines} onSelect={handleSelectDiscipline} />
       )}
@@ -182,9 +176,6 @@ const stopWorkout = () => {
     </button>
   </div>
 )}
-
-
-
       <WorkoutHistory workoutHistory={workoutHistory} />
       <Footer />
     </div>

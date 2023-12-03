@@ -1,9 +1,8 @@
 // CalorieIntakeChart.tsx
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import { getCalorieIntakeData } from '../../services/User'; // Adjust the path as necessary
+import { getCalorieIntakeData } from '../../services/User';
 import { useState, useEffect } from 'react';
-import Chart from 'chart.js/auto'; // Ensure you import Chart from 'chart.js/auto' to register controllers, elements, scales, and plugins.
 import {
   Chart as ChartJS,
   CategoryScale,

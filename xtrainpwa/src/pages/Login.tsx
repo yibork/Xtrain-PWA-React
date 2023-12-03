@@ -4,13 +4,11 @@ import { useNavigate } from 'react-router-dom'; // If you're using react-router
 import { login } from '../services/Login';
 import {LoginResponse} from '../types/user';
 
-// Define a type for the form state
 type FormState = {
   username: string;
   password: string;
 };
 
-// Define a type for the meta information
 type MetaProps = {
   title: string;
   description: string;
@@ -23,13 +21,13 @@ const LoginPage = () => {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    setError(''); // Reset previous errors
+    setError('');
     try {
       const data : LoginResponse = await login(formState.username, formState.password);
       console.log(data);
       localStorage.setItem('authToken', data.access);
       localStorage.setItem('refreshToken', data.refresh);
-      navigate('/profile'); // Adjust the route as needed
+      navigate('/profile');
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -48,7 +46,7 @@ const LoginPage = () => {
   };
 
   const meta: MetaProps = {
-    title: "Fixi | Sign In",
+    title: "Xtrain | Sign In",
     description: "Sign in to access your account.",
   };
 

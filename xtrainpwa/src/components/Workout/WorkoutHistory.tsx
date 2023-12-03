@@ -7,7 +7,6 @@ interface Props {
 }
 
 const WorkoutHistory: React.FC<Props> = ({ workoutHistory }) => {
-  // Define the type for the accumulator
   type HistoryMap = Record<string, WorkoutSession[]>;
 
   // Group workouts by day
@@ -18,7 +17,7 @@ const WorkoutHistory: React.FC<Props> = ({ workoutHistory }) => {
     }
     acc[date].push(session);
     return acc;
-  }, {} as HistoryMap); // Initialize the accumulator as an empty object of type HistoryMap
+  }, {} as HistoryMap);
 
   return (
     <div className="p-4">

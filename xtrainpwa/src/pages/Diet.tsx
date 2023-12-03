@@ -237,8 +237,7 @@ useEffect(() => {
   };
   return (
     <div className="bg-gray-100 min-h-screen">
-      {/* Objectives Section */}
-      <ProfileSection {...userData} />
+      <ProfileSection   progress={72}/>
       <section className="p-4">
   <h2 className="text-lg font-bold mb-4">Your Meals - {new Date().toLocaleDateString()}</h2>
 </section>
@@ -269,41 +268,32 @@ useEffect(() => {
   ))}
 </section>
 
-
- <section>
-  <div
-      onClick={handleAddMealModalOpen}
-      className="sticky top-0 absolute bottom-10 right-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg transition duration-300 ease-in-out flex items-center justify-center cursor-pointer"
-      style={{
-          width: 'auto', // Auto width to accommodate text
-          height: '48px',
-      }}
-  >
-      <MdAdd size={24} className="mr-2" /> {/* Icon with a smaller size */}
-      <span>Add Daily Meal</span> {/* Descriptive text */}
-  </div>
-</section>
+<button
+  onClick={handleAddMealModalOpen}
+  className="fixed bottom-20 right-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition duration-300 ease-in-out flex items-center justify-center cursor-pointer z-50"
+  aria-label="Add daily meal"
+>
+  <MdAdd size={24} className="mr-2" />
+  <span>Add Daily Meal</span>
+</button>
 
 
-
-
-      {/* Meal Suggestions Section */}
-
-
-  <section className="py-8 bg-gray-100">
-  <div className="container mx-auto px-4 items-center">
-    <div className="flex justify-center">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-6xl">
-        {mealSuggestions.map((meal) => (
-          <div
-            key={meal.id}
-            onClick={() => handleMealSelect(meal.id)}
-            className="cursor-pointer transform transition duration-300 hover:scale-105"
-          >
-            <MealCard meal={meal}  />
-          </div>
-        ))}
-      </div>
+<section className="py-8 bg-gray-100">
+  <div className="container mx-auto px-4">
+    <div className="text-center mb-8">
+      <h2 className="text-2xl font-bold">Meal Suggestions</h2>
+      <p>Choose from a variety of nutritious and delicious meals</p>
+    </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-6xl mx-auto">
+      {mealSuggestions.map((meal) => (
+        <div
+          key={meal.id}
+          onClick={() => handleMealSelect(meal.id)}
+          className="cursor-pointer transform transition duration-300 hover:scale-105"
+        >
+          <MealCard meal={meal} />
+        </div>
+      ))}
     </div>
   </div>
 </section>

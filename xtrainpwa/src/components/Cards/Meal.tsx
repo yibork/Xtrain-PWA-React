@@ -24,7 +24,6 @@ const MealCard: React.FC<MealCardProps> = ({ meal }) => {
         <div className="font-bold text-xl mb-2">{meal.name}</div>
         <p>{`Calories: ${meal.total_calories
 }`}</p>
-        {/* Display more meal information here */}
       </div>
     </div>
   );

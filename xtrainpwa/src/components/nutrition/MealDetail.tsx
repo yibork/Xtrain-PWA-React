@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
-import { getMealsForDiet } from '../../services/Diet'; // Ensure this import path is correct
+import { useParams, useNavigate } from 'react-router-dom';
+import { getMealsForDiet } from '../../services/Diet';
 
 interface Ingredient {
   name: string;
   amount: string;
-  icon?: string; // Include this property only if your ingredients have icons
+  icon?: string;
 }
 interface item {
     name: string;
